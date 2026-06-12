@@ -1,4 +1,3 @@
-# Workflow build, test, dan deploy Java Maven tanpa Sonar
 name: Maven CI/CD Safe
 
 on:
