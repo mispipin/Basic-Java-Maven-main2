@@ -1,11 +1,10 @@
-name: Maven Package & Deploy
+# Workflow build, test, dan deploy Java Maven tanpa Sonar
+name: Maven CI/CD Safe
 
 on:
-  pull_request:
-    branches: [main]
-  release:
-    types: [created]
   push:
+    branches: [main]
+  pull_request:
     branches: [main]
 
 jobs:
@@ -22,19 +21,12 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          server-id: github
-          settings-path: ${{ github.workspace }} # Lokasi settings.xml
 
       - name: Build with Maven
         run: mvn clean install
 
       - name: Run Unit Tests
         run: mvn test
-
-      - name: Publish to GitHub Packages Apache Maven
-        run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
 
   deploy:
     needs: build
